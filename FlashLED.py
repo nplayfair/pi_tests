@@ -2,7 +2,7 @@ import time
 import RPi.GPIO as GPIO
 
 lights = [11, 12, 13, 15]
-delay = 0.08
+delay = 0.04
 
 GPIO.setwarnings(False)
 GPIO.cleanup(lights)
