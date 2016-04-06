@@ -1,23 +1,20 @@
 #!/usr/bin/env ruby
 
 require 'rubygems'
-require 'wiringpi'
+require 'wiringpi2'
+
+led = 0
 
 # New GPIO obj
-gpio = WiringPi::GPIO.new
-
-# Pin names
-led = 1
-
-# Pin mode
-gpio.mode led, OUTPUT
+io = WiringPi::GPIO.new do |gpio|
+	gpio.pin_mode(led, WiringPi::OUTPUT)
+end
 
 # Flashing loop
 
 loop do
-	puts "loop..."
 	sleep 1
-	gpio.write led, 1
+	io.digital_write led, 1
 	sleep 1
-	gpio.write led, 0
+	io.digital_write led, 0
 end
