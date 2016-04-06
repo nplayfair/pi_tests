@@ -5,6 +5,7 @@ require 'wiringpi2'
 
 led1 = 0
 led2 = 1
+fade_val = 0.003
 
 # Initialise LEDs
 io1 = WiringPi::GPIO.new
@@ -22,7 +23,7 @@ loop do
 	for led_level in 0..100
 	  io1.soft_pwm_write 0, led_level
 	  io2.soft_pwm_write 1, 100 - led_level
-	  sleep 0.002
+	  sleep fade_val
 	end
 
 # Fading out
@@ -30,6 +31,6 @@ loop do
 	for led_level in 0..100
 	  io1.soft_pwm_write 0, 100 - led_level
 	  io2.soft_pwm_write 1, led_level
-	  sleep 0.002
+	  sleep fade_val
 	end
 end
