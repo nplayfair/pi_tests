@@ -7,7 +7,6 @@ require 'wiringpi2'
 LED_PINS = [0, 1]
 BUTTON_PIN = 8
 FADE_VAL = 0.003
-led = Array.new
 
 # Instantiate GPIO object
 io = WiringPi::GPIO.new
