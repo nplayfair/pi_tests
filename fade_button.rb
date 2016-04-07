@@ -4,22 +4,22 @@ require 'rubygems'
 require 'wiringpi2'
 
 # Setup Pins
-led_pins = [0, 1]
-button_pin = 8
+LED_PINS = [0, 1]
+BUTTON_PIN = 8
 fade_val = 0.003
 led = Array.new
 
 # Instantiate GPIO object
 io = WiringPi::GPIO.new
 
-io.pin_mode button_pin, WiringPi::INPUT
-led_pins.each do |pin|
+io.pin_mode BUTTON_PIN, WiringPi::INPUT
+LED_PINS.each do |pin|
 	io.pin_mode pin, WiringPi::PWM_OUTPUT
 end
 
 # Set parameters
-led[0] = io.soft_pwm_create led_pins[0], 0, 100
-led[1] = io.soft_pwm_create led_pins[1], 100, 100
+led[0] = io.soft_pwm_create LED_PINS[0], 0, 100
+led[1] = io.soft_pwm_create LED_PINS[1], 100, 100
 
 # Fade funcion
 def fade (io)
@@ -39,7 +39,7 @@ def fade (io)
   # Wait for button to be pressed and fade LEDs
   
   loop do
-    state = io.digital_read button_pin
+    state = io.digital_read BUTTON_PIN
     if state == 0
       # Fade
       for led_level in 0..100
