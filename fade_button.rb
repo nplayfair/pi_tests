@@ -6,7 +6,7 @@ require 'wiringpi2'
 # Setup Pins
 LED_PINS = [0, 1]
 BUTTON_PIN = 8
-fade_val = 0.003
+FADE_VAL = 0.003
 led = Array.new
 
 # Instantiate GPIO object
@@ -45,13 +45,13 @@ def fade (io)
       for led_level in 0..100
         io.soft_pwm_write 0, led_level
         io.soft_pwm_write 1, 100 - led_level
-        sleep fade_val
+        sleep FADE_VAL
       end
 
       for led_level in 0..100
         io.soft_pwm_write 0, 100 - led_level
         io.soft_pwm_write 1, led_level
-        sleep fade_val
+        sleep FADE_VAL
       end
     end
   end
