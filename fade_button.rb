@@ -22,7 +22,7 @@ LED_PINS.each do |led|
 end
 
 ## Fade on
-def fade_on (io = io, led)
+def fade_on (io, led)
   for led_level in 0..100
     io.soft_pwm_write led, led_level
     sleep FADE_VAL
@@ -30,7 +30,7 @@ def fade_on (io = io, led)
 end
 
 ## Fade off
-def fade_off (io = io, led)
+def fade_off (io, led)
   for led_level in 0..100
     io.soft_pwm_write led, 100 - led_level
     sleep FADE_VAL
@@ -39,7 +39,7 @@ end
 
 ## Fade pair
 
-def fade_pair (io = io, led1, led2)
+def fade_pair (io, led1, led2)
   for led_level in 0..100
     io.soft_pwm_write led1, 100 - led_level
     io.soft_pwm_write led2, led_level
@@ -51,9 +51,10 @@ end
 def fade (io)
 
 # Vars
-led_count = LED_PINS.length
-puts led_count
 state = 1
+led_count = LED_PINS.length
+# Status message
+puts "Running with #{led_count} LEDs\n"
 
 # Wait for button to be pressed and fade LEDs
   loop do
