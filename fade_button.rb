@@ -7,6 +7,7 @@ require 'wiringpi2'
 led_pins = [0, 1]
 button_pin = 8
 fade_val = 0.003
+led = Array.new
 
 # Instantiate GPIO object
 io = WiringPi::GPIO.new
@@ -21,7 +22,7 @@ led[0] = io.soft_pwm_create led_pins[0], 0, 100
 led[1] = io.soft_pwm_create led_pins[1], 100, 100
 
 # Fade funcion
-def fade
+def fade (io)
 
   # io1 = WiringPi::GPIO.new
   # io1.pin_mode(led1, WiringPi::PWM_OUTPUT)
@@ -56,4 +57,4 @@ def fade
   end
 end
 
-fade
+fade io
