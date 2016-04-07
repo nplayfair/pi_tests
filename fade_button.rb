@@ -12,7 +12,7 @@ fade_val = 0.003
 io = WiringPi::GPIO.new
 
 io.pin_mode button_pin, WiringPi::INPUT
-leds_pins.each do |pin|
+led_pins.each do |pin|
 	io.pin_mode pin, WiringPi::PWM_OUTPUT
 end
 
