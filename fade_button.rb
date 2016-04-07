@@ -17,8 +17,12 @@ LED_PINS.each do |pin|
 end
 
 # Set parameters
-io.soft_pwm_create LED_PINS[0], 0, 100
-io.soft_pwm_create LED_PINS[1], 100, 100
+LED_PINS.each do |led|
+  io.soft_pwm_create led, 0, 100 if led = 0
+  io.soft_pwm_create led, 100, 100
+  #io.soft_pwm_create LED_PINS[0], 0, 100
+  #io.soft_pwm_create LED_PINS[1], 100, 100
+end
 
 # Fade funcion
 def fade (io)
