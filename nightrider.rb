@@ -3,6 +3,8 @@
 require 'rubygems'
 require 'wiringpi2'
 
+begin
+
 # Setup Pins
 LED_PINS = [0, 1, 2, 3, 4]
 BUTTON_PIN = 8
@@ -15,6 +17,13 @@ io = WiringPi::GPIO.new
 delay = ARGV[0].to_f
 
 ### Functions
+
+## Reset GPIO
+def reset_gpio
+  LED_PINS.each do |pin|
+    io.digital_write pin, 0
+  end
+end
 
 ## Fade on
 def fade_on (io, led)
@@ -144,3 +153,8 @@ end
 #nightrider_fade io, 0.003
 
 nightrider_binary io, delay
+
+rescue SignalException
+  reset_gpio
+  puts "Closing program..."
+end
