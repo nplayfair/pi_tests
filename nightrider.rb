@@ -47,6 +47,14 @@ def fade_pair (io, led1, led2, fade_value = FADE_VAL)
   end
 end
 
+## Switch Pair
+def switch_pair (io, led1, led2, delay)
+  io.digital_write led1, !io.digital_read led1
+  io.digital_write led2, !io.digital_read led2
+  sleep delay
+end
+
+
 ## Fade funcion
 def fade (io)
 
@@ -74,7 +82,7 @@ puts "Running with #{led_count} LEDs\n"
   end # end loop
 end # end method
 
-## Nightrider function
+## Nightrider Fader
 def nightrider_fade (io, speed = 0.003)
   # Vars
   led_count = LED_PINS.length
@@ -97,6 +105,40 @@ def nightrider_fade (io, speed = 0.003)
   end
 end
 
+## Nightrider Binary Mode
+
+def nightrider_binary (io, speed = 0.003)
+  
+  # Set Pin Mode
+  LED_PINS.each do |led|
+  io.mode led, WiringPi::OUTPUT
+end
+
+  # Vars
+  led_count = LED_PINS.length
+  on_led = 0
+  
+  loop do
+    io.digital_write on_led, 1
+    # Iterate up through all LEDs  
+    led_count.times do |cycle|
+      fade_pair io, on_led, on_led + 1, speed
+      on_led += 1
+    end
+    #on_led += 1
+    fade_off io, on_led
+    # Iterate down through LEDs
+    led_count.times do |cycle|
+      fade_pair io, on_led, on_led -1, speed
+      on_led -= 1
+    end
+  end
+end
+
+
 ## Main program
 
-nightrider_fade io, 0.003
+###nightrider_fade io, 0.003
+
+io.digital_write 0, 1
+switch_pair 0, 1
