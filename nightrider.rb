@@ -113,11 +113,11 @@ end
 
 ## Nightrider Binary Mode
 
-def nightrider_binary (io, speed = 0.003)
+def nightrider_binary (io, delay = 0.003)
   
   # Set Pin Mode
   LED_PINS.each do |led|
-  io.mode led, WiringPi::OUTPUT
+  io.pin_mode led, WiringPi::OUTPUT
 end
 
   # Vars
@@ -128,14 +128,14 @@ end
     io.digital_write on_led, 1
     # Iterate up through all LEDs  
     led_count.times do |cycle|
-      fade_pair io, on_led, on_led + 1, speed
+      switch_pair io, on_led, on_led + 1, delay
       on_led += 1
     end
     #on_led += 1
-    fade_off io, on_led
+    io.digital_write on_led, 1
     # Iterate down through LEDs
     led_count.times do |cycle|
-      fade_pair io, on_led, on_led -1, speed
+      switch_pair io, on_led, on_led -1, delay
       on_led -= 1
     end
   end
@@ -144,7 +144,9 @@ end
 
 ## Main program
 
-###nightrider_fade io, 0.003
+#nightrider_fade io, 0.003
 
-io.digital_write 0, 1
-switch_pair io, 0, 1, 0.5
+#io.digital_write 0, 1
+#switch_pair io, 0, 1, 0.5
+
+nightrider_binary io, 0.5
