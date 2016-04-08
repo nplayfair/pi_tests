@@ -19,7 +19,7 @@ delay = ARGV[0].to_f
 ### Functions
 
 ## Reset GPIO
-def reset_gpio
+def reset_gpio (io)
   LED_PINS.each do |pin|
     io.digital_write pin, 0
   end
@@ -155,6 +155,6 @@ end
 nightrider_binary io, delay
 
 rescue SignalException
-  reset_gpio
-  puts "Closing program..."
+  reset_gpio io
+  puts "\nClosing program...\n"
 end
