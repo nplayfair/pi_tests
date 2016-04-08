@@ -48,7 +48,7 @@ def fade_pair (io, led1, led2, fade_value = FADE_VAL)
 end
 
 ## Switch Pair
-def switch_pair (io, led1, led2, delay)
+def switch_pair (io, led1, led2, delay = 0.1)
   io.digital_write led1, !io.digital_read led1
   io.digital_write led2, !io.digital_read led2
   sleep delay
@@ -141,4 +141,4 @@ end
 ###nightrider_fade io, 0.003
 
 io.digital_write 0, 1
-switch_pair 0, 1
+switch_pair io, 0, 1
