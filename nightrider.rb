@@ -11,6 +11,9 @@ FADE_VAL = 0.003
 # Instantiate GPIO object
 io = WiringPi::GPIO.new
 
+# Get arguments
+delay = ARGV[0].to_f
+
 ### Functions
 
 ## Fade on
@@ -132,15 +135,19 @@ def nightrider_binary (io, delay = 0.1)
   loop do
     # Iterate up    
     LED_PINS.each do |led|
-      io.digital_write led, 1
-      sleep delay
-      io.digital_write led, 0
+      unless led == LED_PINS.first
+        io.digital_write led, 1
+        sleep delay
+        io.digital_write led, 0
+      end
     end
     # Iterate down
     LED_PINS.reverse.each do |led|
-      io.digital_write led, 1
-      sleep delay
-      io.digital_write led, 0
+      unless led == LED_PINS.last
+        io.digital_write led, 1
+        sleep delay
+        io.digital_write led, 0
+      end
     end
   end
 end
@@ -150,7 +157,4 @@ end
 
 #nightrider_fade io, 0.003
 
-#io.digital_write 0, 1
-#switch_pair io, 0, 1, 0.5
-
-nightrider_binary io, 0.5
+nightrider_binary io, delay
