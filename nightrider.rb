@@ -83,16 +83,20 @@ def nightrider (io, speed = 0.003)
 
   loop do
     fade_on io, on_led
-    # Iterate through all LEDs  
+    # Iterate up through all LEDs  
     led_count.times do |cycle|
       fade_pair io, on_led, on_led + 1, speed
       on_led += 1
     end
-  fade_off io, on_led
+    #fade_off io, on_led
+    # Iterate down through LEDs
+    led_count.times do |cycle|
+      fade_pair io, on_led, on_led -1, speed
+      on_led -= 1
+    end
   end
 end
 
 ## Main program
 
 nightrider io, 0.003
-fade io
