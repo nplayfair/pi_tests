@@ -42,20 +42,6 @@ def fade_pair (io, led1, led2, fade_value = FADE_VAL)
   end
 end
 
-## Switch Pair
-def switch_pair (io, led0, led1, delay = 0.1)
-  state = []
-
-  state[0] = io.digital_read led0
-  state[1] = io.digital_read led1
-  sleep delay
-  io.digital_write led0, state[1] 
-  io.digital_write led1, state[0]
-  #puts "led 1: #{state[0]}\nled 2: #{state[1]}"
-  sleep delay
-end
-
-
 ## Fade funcion
 def fade (io)
 
