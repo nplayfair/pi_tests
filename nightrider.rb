@@ -75,12 +75,11 @@ puts "Running with #{led_count} LEDs\n"
 end # end method
 
 ## Nightrider function
-def nightrider (io, speed = 0.003)
+def nightrider_fade (io, speed = 0.003)
   # Vars
   led_count = LED_PINS.length
   on_led = 0
-
-
+  
   loop do
     fade_on io, on_led
     # Iterate up through all LEDs  
@@ -88,7 +87,8 @@ def nightrider (io, speed = 0.003)
       fade_pair io, on_led, on_led + 1, speed
       on_led += 1
     end
-    #fade_off io, on_led
+    #on_led += 1
+    fade_off io, on_led
     # Iterate down through LEDs
     led_count.times do |cycle|
       fade_pair io, on_led, on_led -1, speed
@@ -99,4 +99,4 @@ end
 
 ## Main program
 
-nightrider io, 0.003
+nightrider_fade io, 0.003
