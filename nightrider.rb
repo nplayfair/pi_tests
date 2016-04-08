@@ -4,22 +4,14 @@ require 'rubygems'
 require 'wiringpi2'
 
 # Setup Pins
-LED_PINS = [0, 1, 2]
+LED_PINS = [0, 1, 2, 3, 4]
 BUTTON_PIN = 8
 FADE_VAL = 0.003
 
 # Instantiate GPIO object
 io = WiringPi::GPIO.new
 
-io.pin_mode BUTTON_PIN, WiringPi::INPUT
-LED_PINS.each do |pin|
-	io.pin_mode pin, WiringPi::PWM_OUTPUT
-end
-
-# Set parameters
-LED_PINS.each do |led|
-  io.soft_pwm_create led, 0, 100
-end
+### Functions
 
 ## Fade on
 def fade_on (io, led)
@@ -63,6 +55,17 @@ end
 
 ## Fade funcion
 def fade (io)
+
+#Set pin mode to PWM
+io.pin_mode BUTTON_PIN, WiringPi::INPUT
+LED_PINS.each do |pin|
+  io.pin_mode pin, WiringPi::PWM_OUTPUT
+end
+
+# Set PWM parameters
+LED_PINS.each do |led|
+  io.soft_pwm_create led, 0, 100
+end
 
 # Vars
 state = 1
@@ -113,38 +116,32 @@ end
 
 ## Nightrider Binary Mode
 
-def nightrider_binary (io, delay = 0.003)
+def nightrider_binary (io, delay = 0.1)
   
-  # Set Pin Mode
+  puts "delay: #{delay}\n"  
+  # Initialise pins to digital mode and set each to low output
   LED_PINS.each do |led|
   io.pin_mode led, WiringPi::OUTPUT
-end
+  io.digital_write led, 0
+  end
 
   # Vars
   led_count = LED_PINS.length
   on_led = 0
   
   loop do
-    io.digital_write on_led, 1
-    
+    # Iterate up    
     LED_PINS.each do |led|
       io.digital_write led, 1
       sleep delay
       io.digital_write led, 0
     end
-
-    # Iterate up through all LEDs  
-    # led_count.times do |cycle|
-    #   switch_pair io, on_led, on_led + 1, delay
-    #   on_led += 1
-    #end
-    #on_led += 1
-    #io.digital_write on_led, 1
-    # Iterate down through LEDs
-    # led_count.times do |cycle|
-    #   switch_pair io, on_led, on_led -1, delay
-    #   on_led -= 1
-    # end
+    # Iterate down
+    LED_PINS.reverse.each do |led|
+      io.digital_write led, 1
+      sleep delay
+      io.digital_write led, 0
+    end
   end
 end
 
