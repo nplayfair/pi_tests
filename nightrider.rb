@@ -39,11 +39,11 @@ end
 
 ## Fade pair
 
-def fade_pair (io, led1, led2)
+def fade_pair (io, led1, led2, fade_value = FADE_VAL)
   for led_level in 0..100
     io.soft_pwm_write led1, 100 - led_level
     io.soft_pwm_write led2, led_level
-    sleep FADE_VAL
+    sleep fade_value
   end
 end
 
@@ -75,19 +75,23 @@ puts "Running with #{led_count} LEDs\n"
 end # end method
 
 ## Nightrider function
-def nightrider (speed = 0.003)
+def nightrider (io, speed = 0.003)
+  # Vars
+  led_count = LED_PINS.length
+
   loop do
     on_led = 0
     fade_on io, on_led
     # Iterate through all LEDs  
     led_count.times do |cycle|
-      fade_pair io, on_led, on_led + 1
+      fade_pair io, on_led, on_led + 1, speed
       on_led += 1
     end
+  fade_off io, on_led
   end
 
 ## Main program
 
-nightrider
+nightrider io
 
 end
