@@ -126,18 +126,25 @@ end
   
   loop do
     io.digital_write on_led, 1
+    
+    LED_PINS.each do |led|
+      io.digital_write led, 1
+      sleep delay
+      io.digital_write led, 0
+    end
+
     # Iterate up through all LEDs  
-    led_count.times do |cycle|
-      switch_pair io, on_led, on_led + 1, delay
-      on_led += 1
-    end
+    # led_count.times do |cycle|
+    #   switch_pair io, on_led, on_led + 1, delay
+    #   on_led += 1
+    #end
     #on_led += 1
-    io.digital_write on_led, 1
+    #io.digital_write on_led, 1
     # Iterate down through LEDs
-    led_count.times do |cycle|
-      switch_pair io, on_led, on_led -1, delay
-      on_led -= 1
-    end
+    # led_count.times do |cycle|
+    #   switch_pair io, on_led, on_led -1, delay
+    #   on_led -= 1
+    # end
   end
 end
 
