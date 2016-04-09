@@ -68,8 +68,6 @@ end
 # Vars
 state = 1
 led_count = LED_PINS.length
-# Status message
-puts "Running with #{led_count} LEDs\n"
 
 # Wait for button to be pressed and fade LEDs
   loop do
@@ -116,7 +114,6 @@ end
 
 def nightrider_binary (io, delay = 0.1)
   
-  puts "delay: #{delay}\n"  
   # Initialise pins to digital mode and set each to low output
   LED_PINS.each do |led|
   io.pin_mode led, WiringPi::OUTPUT
